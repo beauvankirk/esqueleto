@@ -37,7 +37,7 @@ library
     , bytestring
     , conduit >=1.3
     , monad-logger
-    , persistent >=2.8.0 && <2.9
+    , persistent >=2.8.0 && <2.10
     , resourcet >=1.2
     , tagged >=0.2
     , text >=0.11 && <1.3
@@ -78,7 +78,7 @@ test-suite mysql
     , monad-logger
     , mysql
     , mysql-simple
-    , persistent >=2.8.0 && <2.9
+    , persistent >=2.8.0 && <2.10
     , persistent-mysql
     , persistent-template
     , resourcet >=1.2
@@ -108,7 +108,7 @@ test-suite postgresql
     , esqueleto
     , hspec
     , monad-logger
-    , persistent >=2.8.0 && <2.9
+    , persistent >=2.8.0 && <2.10
     , persistent-postgresql
     , persistent-template
     , postgresql-libpq
@@ -140,7 +140,7 @@ test-suite sqlite
     , esqueleto
     , hspec
     , monad-logger
-    , persistent >=2.8.0 && <2.9
+    , persistent >=2.8.0 && <2.10
     , persistent-sqlite
     , persistent-template
     , resourcet >=1.2
