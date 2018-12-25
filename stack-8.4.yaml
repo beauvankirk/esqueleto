@@ -1,9 +1,6 @@
-resolver: lts-12.2
+resolver: nightly-2018-12-25
 
 packages:
 - '.'
 
 extra-deps:
-- persistent-postgresql-2.8.2.0
-- postgresql-simple-0.5.4.0
-allow-newer: true

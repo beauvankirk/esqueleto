@@ -47,7 +47,20 @@ module Database.Esqueleto.Internal.Language
 import Control.Exception (Exception)
 import Data.Int (Int64)
 import Data.Typeable (Typeable)
-import Database.Esqueleto.Internal.PersistentImport
+-- import Database.Esqueleto.Internal.PersistentImport
+import Database.Persist.Sql (
+  PersistEntity(..)
+  , BackendCompatible(..)
+  , Entity(..)
+  , PersistField(..)
+  )
+-- import Database.Persist.Sql hiding
+--   ( BackendSpecificFilter, Filter(..), PersistQuery, SelectOpt(..)
+--   , Update(..), delete, deleteWhereCount, updateWhereCount, selectList
+--   , selectKeysList, deleteCascadeWhere, (=.), (+=.), (-=.), (*=.), (/=.)
+--   , (==.), (!=.), (<.), (>.), (<=.), (>=.), (<-.), (/<-.), (||.)
+--   , listToJSON, mapToJSON, getPersistMap, limitOffsetOrder, selectSource
+--   , update , count )
 import Text.Blaze.Html (Html)
 
 import qualified Data.ByteString as B

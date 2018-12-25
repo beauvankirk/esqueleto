@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.0.
+-- This file has been generated from package.yaml by hpack version 0.31.1.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c5408ff1923a2a70cf9c7b5590f83d724453768845c1dd1d92888c177dfad357
+-- hash: eee9e00fadcc9757c59870057f9925594a086a8304d4bf89b79978ba3509463b
 
 name:           esqueleto
 version:        2.6.0
@@ -38,7 +38,6 @@ library
       Database.Esqueleto.PostgreSQL
       Database.Esqueleto.SQLite
   other-modules:
-      Database.Esqueleto.Internal.PersistentImport
       Paths_esqueleto
   hs-source-dirs:
       src/

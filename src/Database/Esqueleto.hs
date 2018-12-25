@@ -98,7 +98,8 @@ module Database.Esqueleto
     -- * Re-exports
     -- $reexports
   , deleteKey
-  , module Database.Esqueleto.Internal.PersistentImport
+  , module Database.Persist.Sql
+  -- , module Database.Esqueleto.Internal.PersistentImport
   ) where
 
 import Control.Monad.IO.Class (MonadIO)
@@ -106,7 +107,23 @@ import Control.Monad.Trans.Reader (ReaderT)
 import Data.Int (Int64)
 import Database.Esqueleto.Internal.Language
 import Database.Esqueleto.Internal.Sql
-import Database.Esqueleto.Internal.PersistentImport
+-- import Database.Esqueleto.Internal.PersistentImport
+import Database.Persist.Sql (
+  ToBackendKey(..)
+  , SqlBackend(..)
+  , PersistField(..)
+  , Key(..)
+  , PersistStore
+  , BaseBackend(..)
+  , toSqlKey
+                            )
+-- import Database.Persist.Sql hiding
+--   ( BackendSpecificFilter, Filter(..), PersistQuery, SelectOpt(..)
+--   , Update(..), delete, deleteWhereCount, updateWhereCount, selectList
+--   , selectKeysList, deleteCascadeWhere, (=.), (+=.), (-=.), (*=.), (/=.)
+--   , (==.), (!=.), (<.), (>.), (<=.), (>=.), (<-.), (/<-.), (||.)
+--   , listToJSON, mapToJSON, getPersistMap, limitOffsetOrder, selectSource
+--   , update , count )
 import qualified Database.Persist
 
 

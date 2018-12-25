@@ -28,7 +28,17 @@ import           Data.Semigroup
 import qualified Data.Text.Internal.Builder                   as TLB
 import           Data.Time.Clock                              (UTCTime)
 import           Database.Esqueleto.Internal.Language         hiding (random_)
-import           Database.Esqueleto.Internal.PersistentImport
+-- import           Database.Esqueleto.Internal.PersistentImport
+import Database.Persist.Sql (
+  PersistField(..)
+                            )
+-- import Database.Persist.Sql hiding
+--   ( BackendSpecificFilter, Filter(..), PersistQuery, SelectOpt(..)
+--   , Update(..), delete, deleteWhereCount, updateWhereCount, selectList
+--   , selectKeysList, deleteCascadeWhere, (=.), (+=.), (-=.), (*=.), (/=.)
+--   , (==.), (!=.), (<.), (>.), (<=.), (>=.), (<-.), (/<-.), (||.)
+--   , listToJSON, mapToJSON, getPersistMap, limitOffsetOrder, selectSource
+--   , update , count )
 import           Database.Esqueleto.Internal.Sql
 
 -- | (@random()@) Split out into database specific modules
