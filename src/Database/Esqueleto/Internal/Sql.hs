@@ -72,7 +72,37 @@ import Data.Semigroup
 #endif
 import qualified Data.Monoid as Monoid
 import Data.Proxy (Proxy(..))
-import Database.Esqueleto.Internal.PersistentImport
+-- import Database.Esqueleto.Internal.PersistentImport
+import Database.Persist.Sql
+  ( DBName(..)
+  , Entity(..)
+  , EntityDef(..)
+  , IsPersistBackend
+  , PersistEntity(..)
+  , PersistEntityBackend(..)
+  , PersistField(..)
+  , PersistQueryRead(..)
+  , PersistStoreRead(..)
+  , PersistUniqueRead(..)
+  , PersistValue(..)
+  , PersistException(..)
+  , SqlBackend(..)
+  , SqlReadT
+  , SqlWriteT
+  , compositeFields
+  , fieldDB
+  , entityPrimary
+  , rawQueryRes
+  , rawExecuteCount
+
+  )
+-- import Database.Persist.Sql hiding
+--   ( BackendSpecificFilter, Filter(..), PersistQuery, SelectOpt(..)
+--   , Update(..), delete, deleteWhereCount, updateWhereCount, selectList
+--   , selectKeysList, deleteCascadeWhere, (=.), (+=.), (-=.), (*=.), (/=.)
+--   , (==.), (!=.), (<.), (>.), (<=.), (>=.), (<-.), (/<-.), (||.)
+--   , listToJSON, mapToJSON, getPersistMap, limitOffsetOrder, selectSource
+--   , update , count )
 import Database.Persist.Sql.Util (entityColumnNames, entityColumnCount, parseEntityValues, isIdField, hasCompositeKey)
 import qualified Control.Monad.Trans.Reader as R
 import qualified Control.Monad.Trans.State as S
@@ -987,27 +1017,21 @@ deleteCount = rawEsqueleto DELETE
 -- @
 update
   ::
-  ( PersistEntityBackend val ~ backend
-  , PersistEntity val
-  , PersistUniqueWrite backend
-  , PersistQueryWrite backend
-  , BackendCompatible SqlBackend backend
-  , PersistEntity val
-  , MonadIO m
+  ( MonadIO m, PersistEntity val
+  , BackendCompatible SqlBackend (PersistEntityBackend val)
   )
   => (SqlExpr (Entity val) -> SqlQuery ())
-  -> R.ReaderT backend m ()
+  -> SqlWriteT m ()
 update = void . updateCount
 
 -- | Same as 'update', but returns the number of rows affected.
-updateCount :: ( MonadIO m
-               , PersistEntity val
-               , PersistEntityBackend val ~ backend
-               , BackendCompatible SqlBackend backend
-               , PersistQueryWrite backend
-               , PersistUniqueWrite backend)
-            => (SqlExpr (Entity val) -> SqlQuery ())
-            -> R.ReaderT backend m Int64
+updateCount
+  ::
+  ( MonadIO m, PersistEntity val
+  , BackendCompatible SqlBackend (PersistEntityBackend val)
+  )
+  => (SqlExpr (Entity val) -> SqlQuery ())
+  -> SqlWriteT m Int64
 updateCount = rawEsqueleto UPDATE . from
 
 
@@ -1212,9 +1236,10 @@ makeLimit (conn, _) (Limit ml mo) orderByClauses =
 makeLocking :: LockingClause -> (TLB.Builder, [PersistValue])
 makeLocking = flip (,) [] . maybe mempty toTLB . Monoid.getLast
   where
-    toTLB ForUpdate       = "\nFOR UPDATE"
-    toTLB ForShare        = "\nFOR SHARE"
-    toTLB LockInShareMode = "\nLOCK IN SHARE MODE"
+    toTLB ForUpdate           = "\nFOR UPDATE"
+    toTLB ForUpdateSkipLocked = "\nFOR UPDATE SKIP LOCKED"
+    toTLB ForShare            = "\nFOR SHARE"
+    toTLB LockInShareMode     = "\nLOCK IN SHARE MODE"
 
 
 
