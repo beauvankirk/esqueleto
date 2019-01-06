@@ -72,7 +72,37 @@ import Data.Semigroup
 #endif
 import qualified Data.Monoid as Monoid
 import Data.Proxy (Proxy(..))
-import Database.Esqueleto.Internal.PersistentImport
+-- import Database.Esqueleto.Internal.PersistentImport
+import Database.Persist.Sql
+  ( DBName(..)
+  , Entity(..)
+  , EntityDef(..)
+  , IsPersistBackend
+  , PersistEntity(..)
+  , PersistEntityBackend(..)
+  , PersistField(..)
+  , PersistQueryRead(..)
+  , PersistStoreRead(..)
+  , PersistUniqueRead(..)
+  , PersistValue(..)
+  , PersistException(..)
+  , SqlBackend(..)
+  , SqlReadT
+  , SqlWriteT
+  , compositeFields
+  , fieldDB
+  , entityPrimary
+  , rawQueryRes
+  , rawExecuteCount
+
+  )
+-- import Database.Persist.Sql hiding
+--   ( BackendSpecificFilter, Filter(..), PersistQuery, SelectOpt(..)
+--   , Update(..), delete, deleteWhereCount, updateWhereCount, selectList
+--   , selectKeysList, deleteCascadeWhere, (=.), (+=.), (-=.), (*=.), (/=.)
+--   , (==.), (!=.), (<.), (>.), (<=.), (>=.), (<-.), (/<-.), (||.)
+--   , listToJSON, mapToJSON, getPersistMap, limitOffsetOrder, selectSource
+--   , update , count )
 import Database.Persist.Sql.Util (entityColumnNames, entityColumnCount, parseEntityValues, isIdField, hasCompositeKey)
 import qualified Control.Monad.Trans.Reader as R
 import qualified Control.Monad.Trans.State as S
